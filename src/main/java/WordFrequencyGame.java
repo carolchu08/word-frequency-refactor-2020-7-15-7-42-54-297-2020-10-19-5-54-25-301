@@ -9,7 +9,7 @@ public class WordFrequencyGame {
     public static final String LINE_FEED = "\n";
     public static final String SPACE = " ";
 
-    public String getResult(String inputSentence) {
+    public String getResult(String inputSentence) throws CalculationErrorException {
 
         try {
             //split the input string with 1 to n pieces of spaces
@@ -17,7 +17,7 @@ public class WordFrequencyGame {
             return generateResultString(wordFrequencyList);
 
         } catch (Exception exception) {
-            return CALCULATE_ERROR;
+            throw new CalculationErrorException(CALCULATE_ERROR);
         }
     }
 

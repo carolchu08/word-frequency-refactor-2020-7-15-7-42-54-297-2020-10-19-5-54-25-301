@@ -6,17 +6,23 @@ import java.util.StringJoiner;
 
 
 public class  WordFrequencyGame {
+
+    public static final String WHITE_SPACE_REGEX = "\\s+";
+    public static final String CALCULATE_ERROR = "Calculate Error";
+    public static final String LINE_FEED = "\n";
+    public static final String SPACE = " ";
+
     public String getResult(String inputSentence) {
 
 
-        if (inputSentence.split("\\s+").length == 1) {
+        if (inputSentence.split(WHITE_SPACE_REGEX).length == 1) {
             return inputSentence + " 1";
         } else {
 
             try {
 
                 //split the input string with 1 to n pieces of spaces
-                String[] words = inputSentence.split("\\s+");
+                String[] words = inputSentence.split(WHITE_SPACE_REGEX);
 
                 List<WordFrequency> wordFrequencyList = new ArrayList<>();
                 for (String word : words) {
@@ -36,16 +42,16 @@ public class  WordFrequencyGame {
 
                 wordFrequencyList.sort((wordFrequency1, wordFrequency2) -> wordFrequency2.getWordCount() - wordFrequency1.getWordCount());
 
-                StringJoiner wordFrequencyResultJoiner = new StringJoiner("\n");
+                StringJoiner wordFrequencyResultJoiner = new StringJoiner(LINE_FEED);
                 for (WordFrequency word : wordFrequencyList) {
-                    String wordResultLine = word.getWord() + " " + word.getWordCount();
+                    String wordResultLine = word.getWord() + SPACE + word.getWordCount();
                     wordFrequencyResultJoiner.add(wordResultLine);
                 }
                 return wordFrequencyResultJoiner.toString();
             } catch (Exception exception) {
 
 
-                return "Calculate Error";
+                return CALCULATE_ERROR;
             }
         }
     }
@@ -55,9 +61,9 @@ public class  WordFrequencyGame {
         Map<String, List<WordFrequency>> wordCountMap = new HashMap<>();
         for (WordFrequency wordFrequency : wordFrequencyList) {
             if (!wordCountMap.containsKey(wordFrequency.getWord())) {
-                ArrayList word = new ArrayList<>();
-                word.add(wordFrequency);
-                wordCountMap.put(wordFrequency.getWord(), word);
+                ArrayList frequencyList = new ArrayList<>();
+                frequencyList.add(wordFrequency);
+                wordCountMap.put(wordFrequency.getWord(), frequencyList);
             } else {
                 wordCountMap.get(wordFrequency.getWord()).add(wordFrequency);
             }

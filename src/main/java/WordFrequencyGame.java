@@ -7,7 +7,6 @@ public class WordFrequencyGame {
     public static final String WHITE_SPACE_REGEX = "\\s+";
     public static final String CALCULATE_ERROR = "Calculate Error";
     public static final String LINE_FEED = "\n";
-    public static final String SPACE = " ";
 
     public String getResult(String inputSentence) throws CalculationErrorException {
 
@@ -38,10 +37,8 @@ public class WordFrequencyGame {
         List<String> words = Arrays.asList(inputSentence.split(WHITE_SPACE_REGEX));
         HashSet<String> distinctWords = new HashSet<>(words);
         return distinctWords.stream()
-                .map(word->new WordFrequency(word,Collections.frequency(words,word)))
+                .map(word -> new WordFrequency(word, Collections.frequency(words, word)))
                 .collect(Collectors.toList());
     }
-
-
 
 }

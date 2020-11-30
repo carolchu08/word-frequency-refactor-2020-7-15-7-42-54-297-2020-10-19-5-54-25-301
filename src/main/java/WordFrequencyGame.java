@@ -6,43 +6,43 @@ import java.util.StringJoiner;
 
 
 public class  WordFrequencyGame {
-    public String getResult(String inputStr) {
+    public String getResult(String inputSentence) {
 
 
-        if (inputStr.split("\\s+").length == 1) {
-            return inputStr + " 1";
+        if (inputSentence.split("\\s+").length == 1) {
+            return inputSentence + " 1";
         } else {
 
             try {
 
                 //split the input string with 1 to n pieces of spaces
-                String[] arr = inputStr.split("\\s+");
+                String[] words = inputSentence.split("\\s+");
 
-                List<Input> inputList = new ArrayList<>();
-                for (String s : arr) {
-                    Input input = new Input(s, 1);
-                    inputList.add(input);
+                List<WordFrequency> wordFrequencyList = new ArrayList<>();
+                for (String word : words) {
+                    WordFrequency wordFrequency = new WordFrequency(word, 1);
+                    wordFrequencyList.add(wordFrequency);
                 }
 
                 //get the map for the next step of sizing the same word
-                Map<String, List<Input>> map = getListMap(inputList);
+                Map<String, List<WordFrequency>> wordCountMap = getWordCountMap(wordFrequencyList);
 
-                List<Input> list = new ArrayList<>();
-                for (Map.Entry<String, List<Input>> entry : map.entrySet()) {
-                    Input input = new Input(entry.getKey(), entry.getValue().size());
-                    list.add(input);
+                List<WordFrequency> wordCountList = new ArrayList<>();
+                for (Map.Entry<String, List<WordFrequency>> entry : wordCountMap.entrySet()) {
+                    WordFrequency wordFrequency = new WordFrequency(entry.getKey(), entry.getValue().size());
+                    wordCountList.add(wordFrequency);
                 }
-                inputList = list;
+                wordFrequencyList = wordCountList;
 
-                inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
+                wordFrequencyList.sort((wordFrequency1, wordFrequency2) -> wordFrequency2.getWordCount() - wordFrequency1.getWordCount());
 
-                StringJoiner joiner = new StringJoiner("\n");
-                for (Input w : inputList) {
-                    String s = w.getValue() + " " + w.getWordCount();
-                    joiner.add(s);
+                StringJoiner wordFrequencyResultJoiner = new StringJoiner("\n");
+                for (WordFrequency word : wordFrequencyList) {
+                    String wordResultLine = word.getWord() + " " + word.getWordCount();
+                    wordFrequencyResultJoiner.add(wordResultLine);
                 }
-                return joiner.toString();
-            } catch (Exception e) {
+                return wordFrequencyResultJoiner.toString();
+            } catch (Exception exception) {
 
 
                 return "Calculate Error";
@@ -51,20 +51,20 @@ public class  WordFrequencyGame {
     }
 
 
-    private Map<String, List<Input>> getListMap(List<Input> inputList) {
-        Map<String, List<Input>> map = new HashMap<>();
-        for (Input input : inputList) {
-            if (!map.containsKey(input.getValue())) {
-                ArrayList arr = new ArrayList<>();
-                arr.add(input);
-                map.put(input.getValue(), arr);
+    private Map<String, List<WordFrequency>> getWordCountMap(List<WordFrequency> wordFrequencyList) {
+        Map<String, List<WordFrequency>> wordCountMap = new HashMap<>();
+        for (WordFrequency wordFrequency : wordFrequencyList) {
+            if (!wordCountMap.containsKey(wordFrequency.getWord())) {
+                ArrayList word = new ArrayList<>();
+                word.add(wordFrequency);
+                wordCountMap.put(wordFrequency.getWord(), word);
             } else {
-                map.get(input.getValue()).add(input);
+                wordCountMap.get(wordFrequency.getWord()).add(wordFrequency);
             }
         }
 
 
-        return map;
+        return wordCountMap;
     }
 
 

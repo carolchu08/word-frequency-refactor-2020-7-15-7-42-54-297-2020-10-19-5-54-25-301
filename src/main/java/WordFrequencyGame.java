@@ -1,8 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class WordFrequencyGame {
@@ -25,49 +22,26 @@ public class WordFrequencyGame {
     }
 
     private String generateResultString(List<WordFrequency> wordFrequencyList) {
+        wordFrequencyList.sort((word1, word2) -> word2.getWordCount() - word1.getWordCount());
         StringJoiner wordFrequencyResultJoiner = new StringJoiner(LINE_FEED);
         for (WordFrequency word : wordFrequencyList) {
-            wordFrequencyResultJoiner.add(word.getWord() + SPACE + word.getWordCount());
+            wordFrequencyResultJoiner.add(generateWordFrequencyLine(word));
         }
         return wordFrequencyResultJoiner.toString();
     }
 
+    private String generateWordFrequencyLine(WordFrequency word) {
+        return String.format("%s %d", word.getWord(), word.getWordCount());
+    }
+
     private List<WordFrequency> generateWordFrequency(String inputSentence) {
-        String[] words = inputSentence.split(WHITE_SPACE_REGEX);
-
-        List<WordFrequency> wordFrequencyList = new ArrayList<>();
-        for (String word : words) {
-            wordFrequencyList.add(new WordFrequency(word, 1));
-        }
-
-        //get the map for the next step of sizing the same word
-        Map<String, List<WordFrequency>> wordCountMap = getWordCountMap(wordFrequencyList);
-
-        List<WordFrequency> wordCountList = new ArrayList<>();
-        for (Map.Entry<String, List<WordFrequency>> entry : wordCountMap.entrySet()) {
-            wordCountList.add(new WordFrequency(entry.getKey(), entry.getValue().size()));
-        }
-
-        wordCountList.sort((wordFrequency1, wordFrequency2) -> wordFrequency2.getWordCount() - wordFrequency1.getWordCount());
-        return wordCountList;
+        List<String> words = Arrays.asList(inputSentence.split(WHITE_SPACE_REGEX));
+        HashSet<String> distinctWords = new HashSet<>(words);
+        return distinctWords.stream()
+                .map(word->new WordFrequency(word,Collections.frequency(words,word)))
+                .collect(Collectors.toList());
     }
 
-
-    private Map<String, List<WordFrequency>> getWordCountMap(List<WordFrequency> wordFrequencyList) {
-        Map<String, List<WordFrequency>> wordCountMap = new HashMap<>();
-        for (WordFrequency wordFrequency : wordFrequencyList) {
-            if (!wordCountMap.containsKey(wordFrequency.getWord())) {
-                List<WordFrequency> frequencyList = new ArrayList<>();
-                frequencyList.add(wordFrequency);
-                wordCountMap.put(wordFrequency.getWord(), frequencyList);
-            } else {
-                wordCountMap.get(wordFrequency.getWord()).add(wordFrequency);
-            }
-        }
-
-
-        return wordCountMap;
-    }
 
 
 }

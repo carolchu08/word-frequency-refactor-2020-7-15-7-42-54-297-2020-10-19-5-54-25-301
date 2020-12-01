@@ -11,7 +11,6 @@ public class WordFrequencyGame {
     public String getResult(String inputSentence) throws CalculationErrorException {
 
         try {
-            //split the input string with 1 to n pieces of spaces
             List<WordFrequency> wordFrequencyList = generateWordFrequency(inputSentence);
             return generateResultString(wordFrequencyList);
 

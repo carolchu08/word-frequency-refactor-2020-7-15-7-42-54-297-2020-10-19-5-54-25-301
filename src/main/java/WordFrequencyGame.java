@@ -4,9 +4,9 @@ import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
 
-    public static final String WHITE_SPACE_REGEX = "\\s+";
-    public static final String CALCULATE_ERROR = "Calculate Error";
-    public static final String LINE_FEED = "\n";
+    private static final String WHITE_SPACE_REGEX = "\\s+";
+    private static final String CALCULATE_ERROR = "Calculate Error";
+    private static final String LINE_FEED = "\n";
 
     public String getResult(String inputSentence) throws CalculationErrorException {
 

@@ -8,14 +8,14 @@ public class WordFrequencyGame {
     private static final String CALCULATE_ERROR = "Calculate Error";
     private static final String LINE_FEED = "\n";
 
-    public String getResult(String inputSentence) throws CalculationErrorException {
+    public String getResult(String inputSentence) throws Exception {
 
         try {
             List<WordFrequency> wordFrequencyList = generateWordFrequency(inputSentence);
             return generateResultString(wordFrequencyList);
 
         } catch (Exception exception) {
-            throw new CalculationErrorException(CALCULATE_ERROR);
+            return CALCULATE_ERROR;
         }
     }
 

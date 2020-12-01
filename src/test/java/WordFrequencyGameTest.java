@@ -52,7 +52,7 @@ public class WordFrequencyGameTest {
         validate_Input_words_process_to_expected_word(inputSentence, expectResult);
     }
 
-    private void validate_Input_words_process_to_expected_word(String inputStr, String expectResult) throws CalculationErrorException {
+    private void validate_Input_words_process_to_expected_word(String inputStr, String expectResult) throws Exception {
         WordFrequencyGame game = new WordFrequencyGame();
         //When
         String result = game.getResult(inputStr);
